@@ -1,51 +1,42 @@
 import React from 'react';
+import Square from './Square'
+import initBoard from '../helper-functions/InitBoard'
 
-class Square extends React.Component {
+
+export default class Board extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            piece: null,
-            row: props.row,
-            col: props.col,
-        };
+            squares: initBoard(),
+        }
     }
 
-    color() {
+    squareColor(i, j) {
         const white = {
-            background: "white",
+            backgroundColor: "lightyellow",
         }
         const black = {
-            background: "black",
+            backgroundColor: "darkgreen",
         }
-        if ((this.state.row + this.state.col) % 2 == 0) {
-            return black;
+        if ((i + j) % 2 == 0) {
+            return white;
         }
-        else return white;
+        else return black;
     }
 
-    render() {
+    renderSquare(i, j) {
         const style = {
             border: "1px solid #999",
-            height: "34px",
-            width: "34px",
+            height: "45px",
+            width: "45px",
         };
-        return (
-            <button style={{ ...style, ...this.color() }} className="square" ></button>
-        );
+        console.log(this.state.squares[i][j])
+        return <Square
+            piece={this.state.squares[i][j]}
+            style={{ ...style, ...this.squareColor(i, j), ...this.state.squares[i][j] ? this.state.squares[i][j].style : null }}
+            onClick={this.props.onClick} />
     }
-}
 
-class Board extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            squares: Array(8).fill(Array(8).fill(null)),
-        }
-    }
-    renderSquare(i, j) {
-        return <Square row={i} col={j} />
-    }
     renderRow(i) {
         let squares = [];
         for (let index = 0; index < this.state.squares[i].length; index++) {
@@ -70,5 +61,3 @@ class Board extends React.Component {
         );
     }
 }
-
-export default Board;
