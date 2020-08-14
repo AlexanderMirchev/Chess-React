@@ -4,12 +4,12 @@ import initBoard from '../helper-functions/InitBoard'
 
 
 export default class Board extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            squares: initBoard(),
-        }
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         squares: props.squares,
+    //     }
+    // }
 
     squareColor(i, j) {
         const white = {
@@ -30,16 +30,17 @@ export default class Board extends React.Component {
             height: "45px",
             width: "45px",
         };
-        console.log(this.state.squares[i][j])
+
         return <Square
-            piece={this.state.squares[i][j]}
-            style={{ ...style, ...this.squareColor(i, j), ...this.state.squares[i][j] ? this.state.squares[i][j].style : null }}
-            onClick={this.props.onClick} />
+            piece={this.props.squares[i][j]}
+            style={{ ...style, ...this.squareColor(i, j), ...this.props.squares[i][j] ? this.props.squares[i][j].style : null }}
+            onClick={() => this.props.onClick(i, j)}
+        />
     }
 
     renderRow(i) {
         let squares = [];
-        for (let index = 0; index < this.state.squares[i].length; index++) {
+        for (let index = 0; index < this.props.squares[i].length; index++) {
             squares.push(this.renderSquare(i, index));
         }
         return (
@@ -51,7 +52,7 @@ export default class Board extends React.Component {
 
     render() {
         let rows = [];
-        for (let index = 0; index < this.state.squares.length; index++) {
+        for (let index = 0; index < this.props.squares.length; index++) {
             rows.push(this.renderRow(index));
         }
         return (

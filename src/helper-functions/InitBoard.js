@@ -33,6 +33,5 @@ export default function initBoard() {
     squares[0][5] = new Bishop(2);
     squares[7][5] = new Bishop(1);
 
-
     return squares;
 }
